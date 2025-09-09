@@ -38,9 +38,32 @@ module sequence_detector_tb();
         $finish;
     end
 
-    always_comb begin : counters
+    //always_comb begin : counters
         // Create counters here to count sequence occurrences for both Mealy and Moore implementations
         // ???
+    //end
+    always_ff @(posedge clk or negedge reset_n) begin : counters
+        if (!reset_n) begin
+            moore_count <= 0;
+            mealy_count <= 0;
+        end else begin
+            // Count Moore detections
+            if (moore_detected)
+                moore_count <= moore_count + 1;
+
+            // Count Mealy detections
+            if (mealy_detected)
+                mealy_count <= mealy_count + 1;
+        end
+    end
+
+    // Display counts at the end of simulation
+    final begin
+        $display("========================================");
+        $display("Simulation finished");
+        $display("Moore detections: %0d", moore_count);
+        $display("Mealy detections: %0d", mealy_count);
+        $display("========================================");
     end
 
 

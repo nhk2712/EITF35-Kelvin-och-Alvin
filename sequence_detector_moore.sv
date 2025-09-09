@@ -36,17 +36,47 @@ module sequence_detector_moore (
 
         case (state_current)
             s_init : begin
-                if (data_serial == 0) begin
-                    // is this line necessary?
+                if (data_serial == 1) begin
+                    // is this line necessary? => not, explained in Mealy machine file
                     state_next = s_init;
                 end else begin
-                    state_next = s_1;
+                    state_next = s_0;
                 end
             end
-            s_1 : begin
-                // ???
+
+            s_0 : begin
+                if (data_serial == 0) begin
+                    state_next = s_0;
+                end else begin
+                    state_next = s_01;
+                end
             end
-            // ???
+            
+            s_01 : begin
+                if (data_serial == 0) begin
+                    state_next = s_010;
+                end else begin
+                    state_next = s_init;
+                end
+            end
+
+            s_010 : begin
+                if (data_serial == 0) begin
+                    state_next = s_0100;
+                end else begin
+                    state_next = s_01;
+                end
+            end
+
+            s_0100 : begin
+                detected = 1; // catch the sequence, defining next state for overlapping
+
+                if (data_serial == 0) begin
+                    state_next = s_0;
+                end else begin
+                    state_next = s_01;
+                end
+            end
             default : state_next = s_init; // default case
         endcase
     end
