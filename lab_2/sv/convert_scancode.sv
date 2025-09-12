@@ -8,10 +8,49 @@
 module convert_scancode (
     input logic clk,
     input logic rst,
+
     input logic edge_found,
-    input logic serial_data,
+    input logic serial_data, // kb_data_sync
+
     output logic valid_scan_code,
-    output logic [7:0] scan_code_out
+    output logic [7:0] scan_code_out // only 8 bits
     );
+
+    logic [4:0] counter, counter_next; // count from 0-31 (eq. 1-32)
+    logic [9:0] scan_code_temp, scan_code_temp_next; // stop, parity, 8 bits
+    logic valid_scan_code_temp, valid_scan_code_temp_next;
+
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin // rst
+            scan_code_temp <= '0;
+            counter <= '0;
+            valid_scan_code_temp <= '0;
+        end else begin // pos clk edge
+            valid_scan_code_temp <= valid_scan_code_temp_next;
+            scan_code_temp <= scan_code_temp_next;
+            counter <= counter_next;
+        end
+    end
+
+    always_comb begin
+        // Default
+        counter_next = counter;
+        scan_code_temp_next = scan_code_temp;
+        valid_scan_code_temp_next = valid_scan_code_temp;
+
+        if ((counter == 5'd1 || counter == 5'd11 || counter == 5'd22) & edge_found) begin
+            valid_scan_code_temp_next = 1'b1;
+        end else begin
+            valid_scan_code_temp_next = 1'b0;
+        end
+
+        if (edge_found) begin // do the shifting here
+            scan_code_temp_next = {serial_data, scan_code_temp[9:1]}; // right shift
+            counter_next = counter + 1;
+        end
+    end
+
+    assign scan_code_out = scan_code_temp[7:0];
+    assign valid_scan_code = valid_scan_code_temp;
 
 endmodule
