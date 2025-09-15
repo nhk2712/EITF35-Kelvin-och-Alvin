@@ -24,8 +24,7 @@ Here is the simulated waveforms in Vivado:
 
 ![alt text](img/EITF35_lab2_1.png)
 
-Below is the real implementation on an Artix-7 FPGA:
+See the physical implementation on an Artix-7 FPGA at: `img/EITF35_lab2_2.MOV`. The SystemVerilog source files have to be updated to match real-life conditions, so they are different from what have been simulated.
 
-<video controls src="img/IMG_0574.MOV" title="Title"></video>
-
-The SystemVerilog source files have to be updated to match real-life conditions, so they are different from what have been simulated.
+### Lab 3: Arithmetic-Logic Unit (ALU)
+Stay tuned.
