@@ -16,7 +16,7 @@ module convert_scancode (
     output logic [7:0] scan_code_out // only 8 bits
     );
 
-    logic [4:0] counter, counter_next; // count from 0-31 (eq. 1-32)
+    logic [4:0] counter, counter_next; // modulo-11 counter
     logic [9:0] scan_code_temp, scan_code_temp_next; // stop, parity, 8 bits
     logic valid_scan_code_temp, valid_scan_code_temp_next;
 
@@ -38,10 +38,11 @@ module convert_scancode (
         scan_code_temp_next = scan_code_temp;
         valid_scan_code_temp_next = valid_scan_code_temp;
 
-        if ((counter == 5'd1 || counter == 5'd11 || counter == 5'd22) & edge_found) begin
+        if (counter == 4'd11) begin
+            counter_next = '0;
             valid_scan_code_temp_next = 1'b1;
         end else begin
-            valid_scan_code_temp_next = 1'b0;
+            valid_scan_code_temp_next = '0;
         end
 
         if (edge_found) begin // do the shifting here

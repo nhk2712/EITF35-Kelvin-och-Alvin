@@ -15,7 +15,7 @@ module keyboard_ctrl (
     output logic [3:0] seg_en
     );
 
-    logic [7:0] scan_code_prev, scan_code_now, scan_code_prev_next, scan_code_now_next;
+    logic [7:0] scan_code_prev, scan_code_prev_next;
 
     logic [7:0] digit_0, digit_0_next; // right-most
     logic [7:0] digit_1, digit_1_next;
@@ -25,7 +25,7 @@ module keyboard_ctrl (
     logic [3:0] seg_en_temp, seg_en_temp_next;
     logic [7:0] code_to_display_temp;
 
-    logic [7:0] counter, counter_next; // for the LED lighting up, refresh after 2^8 cycles
+    logic [15:0] counter, counter_next; // for the LED lighting up, refresh after 2^16 cycles
 
     always_ff @(posedge clk or posedge rst) begin : blockName
         if (rst) begin
@@ -35,7 +35,6 @@ module keyboard_ctrl (
             digit_3 <= '0;
             seg_en_temp <= '0;
             scan_code_prev <= '0;
-            scan_code_now <= '0;
             counter <= 0;
         end else begin
             digit_0 <= digit_0_next;
@@ -44,7 +43,6 @@ module keyboard_ctrl (
             digit_3 <= digit_3_next;
             seg_en_temp <= seg_en_temp_next;
             scan_code_prev <= scan_code_prev_next;
-            scan_code_now <= scan_code_now_next;
             counter <= counter_next;
         end
     end
@@ -59,28 +57,26 @@ module keyboard_ctrl (
         counter_next = counter + 1;
         code_to_display_temp = '0;
         scan_code_prev_next = scan_code_prev;
-        scan_code_now_next = scan_code_now;
 
         // Shifting
         if (valid_code) begin
-            scan_code_prev_next = scan_code_now;
-            scan_code_now_next = scan_code_in;
-
             if (scan_code_prev == 8'hF0) begin
                 digit_3_next = digit_2;
                 digit_2_next = digit_1;
                 digit_1_next = digit_0;
-                digit_0_next = scan_code_now;
+                digit_0_next = scan_code_in; // use current input directly
             end
+
+            scan_code_prev_next = scan_code_in; // update AFTER using it
         end
 
         if (counter == '0) begin
-        if (seg_en_temp == 4'b0000) begin
-            seg_en_temp_next = 4'b0001; // First time after reset, start with the right-most digit
-        end else begin
-            seg_en_temp_next = {seg_en_temp[2:0], seg_en_temp[3]};
+            if (seg_en_temp == 4'b0000) begin
+                seg_en_temp_next = 4'b0001; // First time after reset, start with the right-most digit
+            end else begin
+                seg_en_temp_next = {seg_en_temp[2:0], seg_en_temp[3]};
+            end
         end
-    end
 
         case (seg_en_temp) // cannot use LUT for this bcuz LUT requires constants
             4'b0001: code_to_display_temp = digit_0;
