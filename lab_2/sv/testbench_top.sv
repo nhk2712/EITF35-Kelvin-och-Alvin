@@ -25,7 +25,7 @@ module testbench_top();
     logic [7:0] seven_segment_number;
     logic [7:0] seven_segment_enable;
        
-    logic [32:0] key_all;
+    logic [31:0] key_all;
     logic start_shifting = 0;
     integer bit_index = 0;
     
@@ -70,7 +70,7 @@ module testbench_top();
             case (state)
                 INIT:
                 begin
-                    key_all <= {2'b11, memory[memory_index], 1'b0, 2'b11, 8'hf0, 1'b0, 2'b11, memory[memory_index], 2'b00};
+                    key_all <= {2'b11, memory[memory_index], 1'b0, 2'b11, 8'hf0, 1'b0, 2'b11, memory[memory_index], 1'b0};
                     memory_index <= memory_index + 1;
                     state <= SHIFT;
                     bit_index <= 0;                    
