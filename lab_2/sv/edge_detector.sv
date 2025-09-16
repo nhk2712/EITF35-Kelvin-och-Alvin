@@ -11,30 +11,16 @@ module edge_detector (
     output edge_found
     );
 
-    logic kb_clk_prev, kb_clk_now; // FFs
-    logic edge_found_temp; // Combinatorial, result of the comparison of the FFs
+logic kb_clk_q;
 
-    always_ff @(posedge clk or posedge rst) begin
-        if (rst) begin // reset
-            kb_clk_prev <= '0;
-            kb_clk_now <= '0;
-        end else begin // pos clock edge
-            kb_clk_prev <= kb_clk_now;
-            kb_clk_now <= kb_clk_sync;
-        end
+always_ff @( posedge clk ) begin : flipflop
+    if (rst) begin
+        kb_clk_q <= 1'b0;
+    end else begin
+        kb_clk_q <= kb_clk_sync;
     end
+end
 
-    always_comb begin
-        // Default
-        edge_found_temp = 1'b0;
-
-        if (kb_clk_now < kb_clk_prev) begin
-            edge_found_temp = 1'b1;
-        end else begin
-            edge_found_temp = 1'b0;
-        end
-    end
-
-    assign edge_found = edge_found_temp;
+assign edge_found = (~kb_clk_sync) & kb_clk_q;
 
 endmodule
