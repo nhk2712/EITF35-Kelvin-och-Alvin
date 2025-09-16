@@ -19,15 +19,13 @@ module sync_keyboard (
     // Two-stage synchronizer for kb_data
     logic kb_data_ff1, kb_data_ff2;
 
-    // Synchronize kb_clk
-    always_ff @(posedge clk) begin
+    always_ff @(posedge clk) begin : clk_sync
         kb_clk_ff1 <= kb_clk;
         kb_clk_ff2 <= kb_clk_ff1;
     end
     assign kb_clk_sync = kb_clk_ff2;
 
-    // Synchronize kb_data
-    always_ff @(posedge clk) begin
+    always_ff @(posedge clk) begin : data_sync
         kb_data_ff1 <= kb_data;
         kb_data_ff2 <= kb_data_ff1;
     end
