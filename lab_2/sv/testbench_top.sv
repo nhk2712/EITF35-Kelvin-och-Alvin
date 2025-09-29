@@ -117,7 +117,7 @@ module testbench_top();
     
     always @(posedge clk_keyboard)
     begin
-        if (bit_index == 12 & scan_code_debug != memory[memory_index-1]) begin
+        if (bit_index == 11 & scan_code_debug != memory[memory_index-1]) begin
             $display("Failure!");
             $display("DUT Scan code = %x is not equal to expected = %x!", scan_code_debug, memory[memory_index-1]);
             $stop; 
