@@ -11,4 +11,6 @@ module alu_ctrl (
     output logic [1:0] reg_ctrl
     );
 
+    
+
 endmodule
