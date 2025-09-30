@@ -5,4 +5,6 @@ module binary2bcd (
     output logic [9:0] bcd_out
     );
 
+
+
 endmodule
