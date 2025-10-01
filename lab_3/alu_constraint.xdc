@@ -5,8 +5,8 @@
 
 set_property PACKAGE_PIN E3 [get_ports clk]							
 set_property IOSTANDARD LVCMOS33 [get_ports clk]
-create_clock -add -name clk -period 20.00 -waveform {0 10} [get_ports clk]
-# Period = 20(ns) => freq = 50(MHz)
+create_clock -add -name clk -period 10.00 -waveform {0 5} [get_ports clk]
+# Period = 10(ns) => freq = 100(MHz)
 
 ##Buttons
 ##Bank = 15, Pin name = IO_L3P_T0_DQS_AD1P_15,				Sch name = CPU_RESET
