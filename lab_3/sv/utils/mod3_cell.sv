@@ -11,14 +11,12 @@ module mod3_cell(
     logic [8:0] adder_param1;
     logic [8:0] adder_param2;
     logic [8:0] adder_sum;
-    logic adder_carry_out;
 
     adder uut_adder(
         .param1(adder_param1),
         .param2(adder_param2),
 
-        .sum(adder_sum),
-        .carry_out(adder_carry_out)
+        .sum(adder_sum)
     );
 
     // pos to neg 2c signals (used for U_SUB)
