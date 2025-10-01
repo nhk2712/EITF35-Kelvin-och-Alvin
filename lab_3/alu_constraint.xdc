@@ -76,7 +76,7 @@ set_property PACKAGE_PIN M6 [get_ports {anode[1]}]
 	set_property IOSTANDARD LVCMOS33 [get_ports {anode[1]}]
 #Bank = 34, Pin name = IO_L4P_T0_34,						Sch name = AN2
 set_property PACKAGE_PIN M3 [get_ports {anode[2]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {anpde[2]}]
+	set_property IOSTANDARD LVCMOS33 [get_ports {anode[2]}]
 #Bank = 34, Pin name = IO_L13_T2_MRCC_34,					Sch name = AN3
 set_property PACKAGE_PIN N5 [get_ports {anode[3]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {anode[3]}]
