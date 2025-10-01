@@ -32,7 +32,7 @@ module alu_ctrl (
                     next_state = INPUT_B;
                 end 
             end
-            LATCH_B: begin
+            INPUT_B: begin
                 reg_ctrl = 2'b10;
                 if (enter) begin
                     next_state = U_ADD;
