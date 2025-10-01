@@ -11,7 +11,7 @@ module alu_ctrl (
     output logic [1:0] reg_ctrl
     );
 
-    alu_op_t current_state, next_state;.
+    alu_op_t current_state, next_state;
 
     always_ff @(posedge clk or posedge rst) begin 
         if (rst) begin
@@ -68,7 +68,7 @@ module alu_ctrl (
                     if (sign) begin
                         next_state = S_MOD3;
                     end else begin
-                        next_state = U_MOD3
+                        next_state = U_MOD3;
                     end
                 end
             end
@@ -100,7 +100,7 @@ module alu_ctrl (
                     next_state = S_ADD;
                 end else begin
                     if (sign) begin
-                        next_state = U_MOD3
+                        next_state = U_MOD3;
                     end else begin
                         next_state = S_MOD3;
                     end

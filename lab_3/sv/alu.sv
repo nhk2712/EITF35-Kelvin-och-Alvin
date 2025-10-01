@@ -144,10 +144,7 @@ module alu (
             S_MOD3: begin // signed A mod 3
                 mod3_in = a;
 
-                logic [1:0] mod3_out_A_neg = {~mod3_out[1] & ~mod3_out[0], mod3_out[1] & ~mod3_out[0]};
-                logic [1:0] mod3_out_processed = (a[7]) ? mod3_out_A_neg : mod3_out;
-
-                result_temp = {'0, mod3_out_processed};
+                result_temp = {'0, (a[7]) ? {~mod3_out[1] & ~mod3_out[0], mod3_out[1] & ~mod3_out[0]} : mod3_out};
                 overflow_temp = '0;
                 sign_temp = '0;
             end
