@@ -89,6 +89,14 @@ module alu (
 
         // Conditional
         case (fn)
+            INPUT_A: begin
+                result_temp = a;
+            end
+
+            INPUT_B: begin
+                result_temp = b;
+            end
+
             U_ADD: begin // unsigned addition
                 adder_param1 = {'0, a};
                 adder_param2 = {'0, b};
