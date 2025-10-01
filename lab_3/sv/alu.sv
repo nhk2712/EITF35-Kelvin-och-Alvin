@@ -136,9 +136,9 @@ module alu (
 
                 n2p_neg_2c = adder_sum[7:0];
 
-                result_temp = (adder_sum[8]) ? n2p_pos : adder_sum[7:0];
-                overflow_temp = (a[7] ^ b[7]) & (adder_sum[8] ^ a[7]);
-                sign_temp = adder_sum[8]; // result becomes 9-bit here
+                result_temp = (adder_sum[7]) ? n2p_pos : adder_sum[7:0];
+                overflow_temp = (a[7] ^ b[7]) & (adder_sum[7] ^ a[7]);
+                sign_temp = adder_sum[7];
             end
 
             U_MOD3: begin // unsigned A mod 3
