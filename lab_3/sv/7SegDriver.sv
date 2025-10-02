@@ -13,7 +13,7 @@ module seven_seg_driver (
     );
     
     // Registers
-    logic [14:0] led_counter, led_counter_next; // refresh every 2^15 cycles
+    logic [15:0] led_counter, led_counter_next; // refresh every 2^16 cycles => rate ~1.53 kHz
     logic [3:0] anode_temp, anode_temp_next;
 
     // Combinatorial signals
@@ -21,8 +21,8 @@ module seven_seg_driver (
     logic [3:0] leftmost;
     logic [6:0] seg_out;
 
-    always_ff @(posedge clk or posedge rst) begin : Sequential
-        if (rst) begin
+    always_ff @(posedge clk or negedge rst) begin : Sequential
+        if (!rst) begin
             led_counter <= '0;
             anode_temp <= '0;
         end else begin

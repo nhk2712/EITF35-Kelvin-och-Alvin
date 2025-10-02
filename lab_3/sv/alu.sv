@@ -122,11 +122,9 @@ module alu (
                 p2n_pos = b;
                 adder_param2 = p2n_neg_2c;
 
-                n2p_neg_2c = adder_sum[7:0];
-
-                result_temp = (adder_sum[8]) ? n2p_pos : adder_sum[7:0];
-                overflow_temp = '0;
-                sign_temp = adder_sum[8];
+                result_temp = adder_sum[7:0];
+                overflow_temp = adder_sum[8];
+                sign_temp = '0;
             end
 
             S_SUB: begin // signed subtraction

@@ -47,26 +47,27 @@ set_property PACKAGE_PIN V5 [get_ports {alu_input[7]}]
 
 ## 7 segment display
 #Bank = 34, Pin name = IO_L2N_T0_34,						Sch name = CA
-set_property PACKAGE_PIN L3 [get_ports {seven_seg[0]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[0]}]
+# A is MSB
+set_property PACKAGE_PIN L3 [get_ports {seven_seg[6]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[6]}]
 #Bank = 34, Pin name = IO_L3N_T0_DQS_34,					Sch name = CB
-set_property PACKAGE_PIN N1 [get_ports {seven_seg[1]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[1]}]
+set_property PACKAGE_PIN N1 [get_ports {seven_seg[5]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[5]}]
 #Bank = 34, Pin name = IO_L6N_T0_VREF_34,					Sch name = CC
-set_property PACKAGE_PIN L5 [get_ports {seven_seg[2]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[2]}]
+set_property PACKAGE_PIN L5 [get_ports {seven_seg[4]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[4]}]
 #Bank = 34, Pin name = IO_L5N_T0_34,						Sch name = CD
 set_property PACKAGE_PIN L4 [get_ports {seven_seg[3]}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[3]}]
 #Bank = 34, Pin name = IO_L2P_T0_34,						Sch name = CE
-set_property PACKAGE_PIN K3 [get_ports {seven_seg[4]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[4]}]
+set_property PACKAGE_PIN K3 [get_ports {seven_seg[2]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[2]}]
 #Bank = 34, Pin name = IO_L4N_T0_34,						Sch name = CF
-set_property PACKAGE_PIN M2 [get_ports {seven_seg[5]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[5]}]
+set_property PACKAGE_PIN M2 [get_ports {seven_seg[1]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[1]}]
 #Bank = 34, Pin name = IO_L6P_T0_34,						Sch name = CG
-set_property PACKAGE_PIN L6 [get_ports {seven_seg[6]}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[6]}]
+set_property PACKAGE_PIN L6 [get_ports {seven_seg[0]}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {seven_seg[0]}]
 
 #Bank = 34, Pin name = IO_L18N_T2_34,						Sch name = AN0
 set_property PACKAGE_PIN N6 [get_ports {anode[0]}]					

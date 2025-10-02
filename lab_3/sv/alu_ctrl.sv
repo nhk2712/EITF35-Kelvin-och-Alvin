@@ -12,12 +12,17 @@ module alu_ctrl (
     );
 
     alu_op_t current_state, next_state;
+    logic prev_enter, prev_sign; // Need to detect the edge of these signals
 
-    always_ff @(posedge clk or posedge rst) begin 
-        if (rst) begin
+    always_ff @(posedge clk or negedge rst) begin 
+        if (!rst) begin
             current_state <= INPUT_A;
+            prev_enter <= '0;
+            prev_sign <= '0;
         end else begin
             current_state <= next_state;
+            prev_enter <= enter;
+            prev_sign <= sign;
         end
     end
 
@@ -28,21 +33,21 @@ module alu_ctrl (
         case (current_state)
             INPUT_A: begin
                 reg_ctrl = 2'b01;
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = INPUT_B;
                 end 
             end
             INPUT_B: begin
                 reg_ctrl = 2'b10;
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = U_ADD;
                 end 
             end
             U_ADD: begin
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = U_SUB;
                 end else begin
-                    if (sign) begin
+                    if (sign > prev_sign) begin
                         next_state = S_ADD;
                     end else begin
                         next_state = U_ADD;
@@ -50,10 +55,10 @@ module alu_ctrl (
                 end
             end
             U_SUB: begin
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = U_MOD3;
                 end else begin
-                    if (sign) begin
+                    if (sign > prev_sign) begin
                         next_state = S_SUB;
                     end else begin
                         next_state = U_SUB;
@@ -62,10 +67,10 @@ module alu_ctrl (
 
             end
             U_MOD3: begin
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = U_ADD;
                 end else begin
-                    if (sign) begin
+                    if (sign > prev_sign) begin
                         next_state = S_MOD3;
                     end else begin
                         next_state = U_MOD3;
@@ -73,10 +78,10 @@ module alu_ctrl (
                 end
             end
             S_ADD: begin
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = S_SUB;
                 end else begin
-                    if (sign) begin
+                    if (sign > prev_sign) begin
                         next_state = U_ADD;
                     end else begin
                         next_state = S_ADD;
@@ -84,10 +89,10 @@ module alu_ctrl (
                 end
             end
             S_SUB: begin
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = S_MOD3;
                 end else begin
-                    if (sign) begin
+                    if (sign > prev_sign) begin
                         next_state = U_SUB;
                     end else begin
                         next_state = S_SUB;
@@ -96,10 +101,10 @@ module alu_ctrl (
 
             end
             S_MOD3: begin
-                if (enter) begin
+                if (enter > prev_enter) begin
                     next_state = S_ADD;
                 end else begin
-                    if (sign) begin
+                    if (sign > prev_sign) begin
                         next_state = U_MOD3;
                     end else begin
                         next_state = S_MOD3;
@@ -113,7 +118,5 @@ module alu_ctrl (
     end
 
     assign fn = current_state;
-    
-    
 
 endmodule

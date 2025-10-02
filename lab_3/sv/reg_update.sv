@@ -11,8 +11,8 @@ module reg_update (
 
     logic [7:0] reg_a, reg_a_next, reg_b, reg_b_next;
 
-    always_ff @(posedge clk or posedge rst) begin : Sequential
-        if (rst) begin
+    always_ff @(posedge clk or negedge rst) begin : Sequential
+        if (!rst) begin
             reg_a <= '0;
             reg_b <= '0;
         end else begin
